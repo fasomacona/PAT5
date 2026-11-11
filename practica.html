@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Práctica integradora · Tema 5 | GAB-2402</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo">🚀 GAB-2402 <span>Tema 5</span></div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="01-apps-analitica.html">5.1 Apps de analítica</a></li>
+          <li><a href="02-integracion-viz.html">5.2 Integración de viz</a></li>
+          <li><a href="03-proyecto-practico.html">5.3 Proyecto práctico</a></li>
+          <li><a href="practica.html" class="active">Práctica integradora</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class="breadcrumb"><a href="index.html">Inicio</a> › Práctica integradora (Temas 1–5)</div>
+    <section class="section">
+      <h2>💻 Práctica integradora: de los datos a la aplicación</h2>
+      <p>
+        Esta práctica es el cierre del curso. Construirás un <strong>pipeline completo</strong>
+        y una <strong>app Streamlit</strong> usando un dataset de empleados/ventas,
+        aplicando explícitamente competencias de los temas 1 al 5.
+      </p>
+
+      <div class="practica-box">
+        <h3>📦 Material incluido</h3>
+        <div class="btn-group">
+          <a href="notebooks/practica_tema5_integradora.ipynb" class="btn btn-success" download>⬇️ Notebook integrador</a>
+          <a href="data/empleados_ventas.csv" class="btn btn-accent" download>⬇️ Dataset CSV</a>
+          <a href="app/app.py" class="btn" download>⬇️ App Streamlit</a>
+        </div>
+        <p style="margin-top: 1rem; font-size: 0.95rem; color: var(--text-light);">
+          Notebook: <code>notebooks/practica_tema5_integradora.ipynb</code><br>
+          App: <code>app/app.py</code> · Datos: <code>data/empleados_ventas.csv</code>
+        </p>
+      </div>
+
+      <h3>Mapa de la práctica por tema</h3>
+      <table>
+        <thead>
+          <tr><th>Fase</th><th>Tema</th><th>Qué harás</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>A. Carga y limpieza</td><td>1</td><td>Pandas, nulos, duplicados, tipos, features</td></tr>
+          <tr><td>B. Exploración visual</td><td>2</td><td>Seaborn/Plotly, distribuciones, correlaciones</td></tr>
+          <tr><td>C. Estadística y modelo</td><td>3</td><td>Pruebas básicas, regresión/clasificación, métricas, CV</td></tr>
+          <tr><td>D. Persistencia</td><td>4</td><td>Guardar tablas limpias en SQLite y consultar</td></tr>
+          <tr><td>E. Aplicación</td><td>5</td><td>Dashboard Streamlit con filtros, KPIs, gráficos y predicción</td></tr>
+          <tr><td>F. Presentación</td><td>5</td><td>README + conclusiones del proyecto</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Caso de negocio propuesto</h3>
+      <p>
+        <strong>Empresa:</strong> compañía con personal en varias ciudades.<br>
+        <strong>Objetivo 1:</strong> entender drivers del salario y predecir salario
+        (regresión).<br>
+        <strong>Objetivo 2 (opcional):</strong> clasificar si un empleado está en
+        el segmento de alto desempeño / alto salario.<br>
+        <strong>Entrega de valor:</strong> dashboard para RR.HH. o dirección con
+        filtros por departamento y ciudad, más una herramienta simple de estimación.
+      </p>
+
+      <h3>Cómo ejecutar</h3>
+<pre><code>cd tema5-aplicaciones-analitica
+python -m venv venv
+source venv/bin/activate   # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+
+# 1) Análisis en notebook
+jupyter lab
+# Abrir notebooks/practica_tema5_integradora.ipynb
+
+# 2) Aplicación
+streamlit run app/app.py
+</code></pre>
+
+      <div class="callout info">
+        <strong>📌 Criterios de evaluación de esta práctica</strong>
+        <ul style="margin-top: 0.5rem; margin-bottom: 0;">
+          <li>Pipeline reproducible de limpieza → modelo → app.</li>
+          <li>Uso explícito de técnicas de los temas 1–4.</li>
+          <li>App usable (filtros, métricas, al menos 2 visualizaciones, predicción).</li>
+          <li>Documentación clara (README y celdas markdown).</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p><strong>GAB-2402</strong> · Práctica Tema 5 · <strong>Prof. Fabián Soberanes Martín</strong></p>
+  </footer>
+</body>
+</html>

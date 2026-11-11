@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5.2 Integración de visualizaciones | Tema 5</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo">🚀 GAB-2402 <span>Tema 5</span></div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="01-apps-analitica.html">5.1 Apps de analítica</a></li>
+          <li><a href="02-integracion-viz.html" class="active">5.2 Integración de viz</a></li>
+          <li><a href="03-proyecto-practico.html">5.3 Proyecto práctico</a></li>
+          <li><a href="practica.html">Práctica integradora</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class="breadcrumb"><a href="index.html">Inicio</a> › 5.2 Integración de visualizaciones y funcionalidades analíticas</div>
+    <section class="section">
+      <h2>5.2 Integración de visualizaciones y funcionalidades analíticas</h2>
+      <p>
+        La interfaz debe permitir filtrar, comparar y entender resultados del modelo
+        sin salir de la aplicación. Reutilizamos Plotly (Tema 2) y conectamos
+        predicciones del Tema 3.
+      </p>
+
+      <h3>1. Gráficos Plotly en Streamlit</h3>
+<pre><code><span class="kw">import</span> plotly.express <span class="kw">as</span> px
+<span class="kw">import</span> streamlit <span class="kw">as</span> st
+
+fig = px.bar(df.groupby(<span class="str">"ciudad"</span>)[<span class="str">"monto"</span>].sum().reset_index(),
+             x=<span class="str">"ciudad"</span>, y=<span class="str">"monto"</span>, title=<span class="str">"Ventas por ciudad"</span>)
+st.plotly_chart(fig, use_container_width=True)
+</code></pre>
+
+      <h3>2. Layout con columnas y métricas</h3>
+<pre><code>c1, c2, c3 = st.columns(3)
+c1.metric(<span class="str">"Ventas"</span>, f<span class="str">"${total:,.0f}"</span>, delta=f<span class="str">"{delta_pct:.1f}%"</span>)
+c2.metric(<span class="str">"Pedidos"</span>, n_pedidos)
+c3.metric(<span class="str">"Ticket promedio"</span>, f<span class="str">"${ticket:,.0f}"</span>)
+
+tab1, tab2 = st.tabs([<span class="str">"Exploración"</span>, <span class="str">"Modelo"</span>])
+<span class="kw">with</span> tab1:
+    st.plotly_chart(fig_series, use_container_width=True)
+<span class="kw">with</span> tab2:
+    st.write(<span class="str">"Predicción:"</span>, prediccion)
+</code></pre>
+
+      <h3>3. Conectar un modelo entrenado</h3>
+<pre><code><span class="kw">import</span> joblib
+<span class="kw">import</span> numpy <span class="kw">as</span> np
+
+@st.cache_resource
+<span class="kw">def</span> <span class="fn">cargar_modelo</span>():
+    <span class="kw">return</span> joblib.load(<span class="str">"models/modelo_ventas.joblib"</span>)
+
+modelo = cargar_modelo()
+features = st.sidebar.slider(<span class="str">"Experiencia (años)"</span>, 0, 30, 5)
+pred = modelo.predict(np.array([[features, ...]]))
+st.success(f<span class="str">"Salario estimado: ${pred[0]:,.0f}"</span>)
+</code></pre>
+
+      <h3>4. Principios de diseño de dashboards</h3>
+      <ul>
+        <li>Primero KPIs, después detalle.</li>
+        <li>Filtros globales en sidebar.</li>
+        <li>Una pregunta de negocio por sección.</li>
+        <li>Evitar más de 5–6 gráficos en la vista principal.</li>
+        <li>Incluir notas sobre calidad de datos y fecha de actualización.</li>
+      </ul>
+
+      <div class="btn-group">
+        <a href="01-apps-analitica.html" class="btn">← Anterior</a>
+        <a href="03-proyecto-practico.html" class="btn btn-accent">Siguiente →</a>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p><strong>GAB-2402</strong> · Tema 5.2 · Creado por el <strong>Prof. Fabián Soberanes Martín</strong></p>
+  </footer>
+</body>
+</html>

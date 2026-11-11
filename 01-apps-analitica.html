@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5.1 Desarrollo de aplicaciones de analítica | Tema 5</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo">🚀 GAB-2402 <span>Tema 5</span></div>
+      <nav>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="01-apps-analitica.html" class="active">5.1 Apps de analítica</a></li>
+          <li><a href="02-integracion-viz.html">5.2 Integración de viz</a></li>
+          <li><a href="03-proyecto-practico.html">5.3 Proyecto práctico</a></li>
+          <li><a href="practica.html">Práctica integradora</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <div class="breadcrumb"><a href="index.html">Inicio</a> › 5.1 Desarrollo de aplicaciones de analítica de datos</div>
+    <section class="section">
+      <h2>5.1 Desarrollo de aplicaciones de analítica de datos</h2>
+      <p>
+        Una aplicación de analítica permite a usuarios (analistas, gerentes, clientes)
+        explorar datos, ver indicadores y, en muchos casos, obtener predicciones sin
+        escribir código. En este curso usaremos principalmente <strong>Streamlit</strong>
+        (rápido para dashboards) y mencionaremos Flask para APIs/web clásica.
+      </p>
+
+      <h3>1. Arquitectura típica</h3>
+      <ol>
+        <li><strong>Fuentes de datos</strong>: CSV, Excel, SQLite/PostgreSQL, APIs.</li>
+        <li><strong>Capa de procesamiento</strong>: Pandas, limpieza, features (Tema 1).</li>
+        <li><strong>Capa analítica</strong>: estadísticas y modelos (Tema 3).</li>
+        <li><strong>Capa de presentación</strong>: gráficos + UI web (Temas 2 y 5).</li>
+      </ol>
+
+      <h3>2. Streamlit vs Flask</h3>
+      <table>
+        <thead>
+          <tr><th>Aspecto</th><th>Streamlit</th><th>Flask</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Curva de aprendizaje</td><td>Muy baja</td><td>Media</td></tr>
+          <tr><td>Ideal para</td><td>Dashboards, demos, prototipos</td><td>APIs, sitios con rutas/HTML propios</td></tr>
+          <tr><td>UI</td><td>Componentes listos (sidebar, charts)</td><td>Plantillas Jinja + CSS/JS</td></tr>
+          <tr><td>Despliegue</td><td>Streamlit Cloud, Docker</td><td>Gunicorn, Docker, PaaS</td></tr>
+        </tbody>
+      </table>
+
+      <h3>3. Estructura de proyecto recomendada</h3>
+<pre><code>proyecto_analitica/
+├── app.py                 # punto de entrada Streamlit
+├── src/
+│   ├── data_load.py       # lectura CSV / SQL
+│   ├── cleaning.py        # limpieza (Tema 1)
+│   ├── features.py
+│   ├── models.py          # entrenamiento / carga de modelo (Tema 3)
+│   └── viz.py             # funciones de gráficos (Tema 2)
+├── data/
+│   └── ventas.csv
+├── models/                # .joblib o .pkl
+├── sql/
+│   └── schema.sql         # (Tema 4)
+├── requirements.txt
+└── README.md
+</code></pre>
+
+      <h3>4. Hola mundo en Streamlit</h3>
+<pre><code><span class="kw">import</span> streamlit <span class="kw">as</span> st
+<span class="kw">import</span> pandas <span class="kw">as</span> pd
+
+st.set_page_config(page_title=<span class="str">"Analítica"</span>, layout=<span class="str">"wide"</span>)
+st.title(<span class="str">"Dashboard de ventas"</span>)
+
+df = pd.read_csv(<span class="str">"data/ventas.csv"</span>)
+st.dataframe(df.head())
+
+ciudad = st.sidebar.multiselect(<span class="str">"Ciudad"</span>, df[<span class="str">"ciudad"</span>].unique())
+<span class="kw">if</span> ciudad:
+    df = df[df[<span class="str">"ciudad"</span>].isin(ciudad)]
+st.metric(<span class="str">"Total ventas"</span>, f<span class="str">"${df['monto'].sum():,.0f}"</span>)
+</code></pre>
+
+      <h3>5. Buenas prácticas</h3>
+      <ul>
+        <li>Separa lógica de negocio de la UI.</li>
+        <li>Cachea datos y modelos (<code>@st.cache_data</code>, <code>@st.cache_resource</code>).</li>
+        <li>No hardcodees rutas absolutas; usa rutas relativas al proyecto.</li>
+        <li>Documenta supuestos y limitaciones en la propia app.</li>
+      </ul>
+
+      <div class="btn-group">
+        <a href="index.html" class="btn">← Inicio</a>
+        <a href="02-integracion-viz.html" class="btn btn-accent">Siguiente →</a>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p><strong>GAB-2402</strong> · Tema 5.1 · Creado por el <strong>Prof. Fabián Soberanes Martín</strong></p>
+  </footer>
+</body>
+</html>
